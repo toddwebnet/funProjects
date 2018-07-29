@@ -145,10 +145,14 @@ class FileCopier extends SQLiteConnection
     {
         print "{$cmd} {$source} {$target} \n";
         if ($cmd == 'mkdir') {
-            mkdir($source);
+            if(!file_exists($source)) {
+                mkdir($source);
+            }
         }
         if ($cmd == 'cp') {
-            copy($source, $target);
+            if(!file_exists($target)) {
+                copy($source, $target);
+            }
         }
         if ($cmd == 'rmdir') {
             rmdir($source);
