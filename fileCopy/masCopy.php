@@ -40,6 +40,10 @@ $copies = [
         'source' => '/Volumes/Public/Media',
         'target' => '/Volumes/data/Media',
     ],
+    [
+        'source' => '/Volumes/Public/Music',
+        'target' => '/Volumes/data/Music',
+    ],
 ];
 foreach ($copies as $block) {
     $source = $block['source'];
