@@ -94,8 +94,10 @@ class FileCopier extends SQLiteConnection
 
     public function processSourcePath($source, $target)
     {
+        print "\n";
         $ds = DIRECTORY_SEPARATOR;
         foreach (scandir($source) as $file) {
+            print $source . $ds . $file . "\n";
             if (in_array($file, ['.', '..'])) {
                 continue;
             }
@@ -141,6 +143,7 @@ class FileCopier extends SQLiteConnection
 
     private function runCommand($cmd, $source, $target)
     {
+        print "{$cmd} {$source} {$target} \n";
         if ($cmd == 'mkdir') {
             mkdir($source);
         }
