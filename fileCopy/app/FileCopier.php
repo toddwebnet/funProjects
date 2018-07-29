@@ -92,7 +92,7 @@ class FileCopier extends SQLiteConnection
         $this->processSourcePath($sourcePath, $targetPath);
     }
 
-    private function processSourcePath($source, $target)
+    public function processSourcePath($source, $target)
     {
         $ds = DIRECTORY_SEPARATOR;
         foreach (scandir($source) as $file) {
