@@ -9,6 +9,10 @@ USE App\Config;
 
 $copies = [
     [
+        'source' => '/Volumes/Public/shoregroup',
+        'target' => '/Volumes/data/shoregroup',
+    ],
+    [
         'source' => '/Volumes/Public/Sentry',
         'target' => '/Volumes/data/Sentry',
     ],
