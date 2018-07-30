@@ -13,6 +13,10 @@ $copies = [
         'target' => '/Volumes/data/shoregroup/solarized',
     ],
     [
+        'source' => '/Volumes/Public/Mac',
+        'target' => '/Volumes/data/Mac',
+    ],
+    [
         'source' => '/Volumes/Public/Sentry',
         'target' => '/Volumes/data/Sentry',
     ],
