@@ -32,7 +32,14 @@ class FileCopier extends SQLiteConnection
         foreach ($tables as $table) {
             $this->pdo->exec($table);
         }
-        $this->flushCommands();
+
+    }
+
+    public function queueSize(){
+        $sql = "select count(*) copies from copies";
+        $stmt = $this->pdo->query($sql);
+
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
     public function flushCommands()
