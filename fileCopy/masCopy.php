@@ -7,52 +7,27 @@ use App\FileCopier;
 use App\SQLiteConnection;
 USE App\Config;
 
-$copies = [
-    [
-        'source' => '/Volumes/Public/shoregroup/solarized',
-        'target' => '/Volumes/data/shoregroup/solarized',
-    ],
-    [
-        'source' => '/Volumes/Public/Mac',
-        'target' => '/Volumes/data/Mac',
-    ],
-    [
-        'source' => '/Volumes/Public/Sentry',
-        'target' => '/Volumes/data/Sentry',
-    ],
-    [
-        'source' => '/Volumes/Public/Reliance',
-        'target' => '/Volumes/data/Reliance',
-    ],
-    [
-        'source' => '/Volumes/Public/projects',
-        'target' => '/Volumes/data/projects'
-    ],
-    [
-        'source' => '/Volumes/Public/PrinterLogic',
-        'target' => '/Volumes/data/PrinterLogic',
-    ],
-    [
-        'source' => '/Volumes/Public/njt',
-        'target' => '/Volumes/data/njt',
-    ],
-    [
-        'source' => '/Volumes/Public/netbook',
-        'target' => '/Volumes/data/netbook',
-    ],
-    [
-        'source' => '/Volumes/Public/Movies',
-        'target' => '/Volumes/data/Movies',
-    ],
-    [
-        'source' => '/Volumes/Public/Media',
-        'target' => '/Volumes/data/Media',
-    ],
-    [
-        'source' => '/Volumes/Public/Music',
-        'target' => '/Volumes/data/Music',
-    ],
+
+
+$files = [
+	'Sentry',
+	'shoregroup',
+	'Software',
+	'songs',
+	'templates',
+	'tutorials',
+	'Vlogs',
 ];
+$copies = [];
+foreach($files as $file)
+$copies [] =   
+    [
+        'source' => '/mnt/public/' . $file,
+        'target' => '/media/bigboy/data/' . $file,
+    ];
+// print_r($copies);die();
+
+
 foreach ($copies as $block) {
     $source = $block['source'];
     $target = $block['target'];
