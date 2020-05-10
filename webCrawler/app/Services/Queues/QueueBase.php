@@ -4,6 +4,7 @@ namespace App\Services\Queues;
 use App\Services\HtmlParserService;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Log;
 
 class QueueBase
 {
@@ -42,6 +43,7 @@ class QueueBase
         if ($obj === null) {
             return null;
         }
+        Log::info('Popped ' . $this->baseModel . ' ID: ' . $obj->id);
         $retObject = (object)$obj->toArray();
         if (!$this->dontDeleteOnPop) {
             $obj->delete();

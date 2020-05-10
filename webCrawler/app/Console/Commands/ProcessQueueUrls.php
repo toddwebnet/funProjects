@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Services\Queues\QueueUrlService;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 
 class ProcessQueueUrls extends Command
 {
@@ -12,8 +13,11 @@ class ProcessQueueUrls extends Command
 
     public function handle()
     {
+//        Log::info('Job Run: processQueueUrls');
         $overrideId = $this->argument('overrideId');
-        app()->make(QueueUrlService::class, ['overrideId' => $overrideId])->process();
-        $this->line('done');
+        $this->line(
+            app()->make(QueueUrlService::class, ['overrideId' => $overrideId])->process()
+        );
+
     }
 }

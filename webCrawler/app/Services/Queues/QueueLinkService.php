@@ -5,6 +5,7 @@ namespace App\Services\Queues;
 use App\Models\Link;
 use App\Models\QueueLink;
 use App\Services\Providers\UrlProvider;
+use Illuminate\Support\Facades\Log;
 
 class QueueLinkService extends QueueBase
 {
@@ -24,11 +25,12 @@ class QueueLinkService extends QueueBase
         /** @var QueueLink $queueLink */
         $queueLink = $this->popNext();
         if ($queueLink === null) {
-            return;
+            return 0;
         }
         $link = Link::find($queueLink->link_id);
-        dump($link->link);
-        app()->make(UrlProvider::class)->addToQueue($link->link);
+        Log::info('Adding to Url Queue: ' . $link->link);
+        app()->make(UrlProvider::class)->addNewUrl($link->link);
+        return 1;
     }
 
 }

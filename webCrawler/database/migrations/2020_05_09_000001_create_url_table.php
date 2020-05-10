@@ -16,6 +16,7 @@ class CreateUrlTable extends Migration
         Schema::create('urls', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('url', 2048);
+            $table->string('host', 2048);
             $table->timestamp('last_refreshed')->nullable();
             $table->boolean('is_valid')->default(true);
             $table->timestamps();

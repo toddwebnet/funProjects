@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Services\Queues\QueueHtmlService;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 
 class ProcessQueueHtmls extends Command
 {
@@ -12,8 +13,10 @@ class ProcessQueueHtmls extends Command
 
     public function handle()
     {
+//        Log::info('Job Run: processQueueHtmls');
         $overrideId = $this->argument('overrideId');
-        app()->make(QueueHtmlService::class, ['overrideId' => $overrideId])->process();
-        $this->line('done');
+        $this->line(app()->make(
+            QueueHtmlService::class, ['overrideId' => $overrideId])->process()
+        );
     }
 }

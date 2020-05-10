@@ -2,9 +2,12 @@
 
 namespace App\Console\Commands;
 
-use App\Services\UrlParserService;
+
+use App\Models\Url;
+use App\Services\HtmlParserService;
+use App\Services\Providers\HtmlProvider;
 use Illuminate\Console\Command;
-use PHPHtmlParser\Dom;
+use Illuminate\Support\Facades\Cache;
 
 class Test extends Command
 {
@@ -12,13 +15,25 @@ class Test extends Command
 
     public function handle()
     {
-        $url = "https://www.yahoo.com/news/obama-irule-of-law-michael-flynn-case-014121045.html?yes=no";
-        $url = "//google.com/dog/";
+        $url = Url::find(55);
+         $stuff  =  app()->make(HtmlParserService::class)->getUrl("https://www.marion.com/");
 
-$link = "/goober";
-        $urlParser = app()->make(UrlParserService::class, ['url' => $url]);
-        dump($urlParser->buildFullLinkOnPage("https://dog.com"));
+    }
 
-//        dump($urlParser->parse());
+    public function handle2()
+    {
+        $url = Url::find(2);
+
+        try {
+            app()->make(HtmlProvider::class)->addToQueue(
+                $url->id,
+                app()->make(HtmlParserService::class)->getUrl($url->url)
+            );
+        } catch (\GuzzleHttp\Exception\ConnectException $e) {
+            $url->is_valid = false;
+            $url->save();
+        } catch (\Exception $e) {
+            dump($e->getMessage());
+        }
     }
 }

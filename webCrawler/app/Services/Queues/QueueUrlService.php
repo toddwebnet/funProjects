@@ -6,6 +6,7 @@ use App\Models\QueueUrl;
 use App\Models\Url;
 use App\Services\Providers\HtmlProvider;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class QueueUrlService extends QueueBase
 {
@@ -33,19 +34,27 @@ class QueueUrlService extends QueueBase
         $queueUrl = $this->popNext();
         if ($queueUrl === null) {
             // no items in queue
-            return;
+            return 0;
         }
         $url = Url::find($queueUrl->url_id);
         if ($url === null) {
             // url not found
-            return;
+            return 0;
         }
-
+        Log::info('Adding to HTML Queue: ' . $url->url);
+        try {
+            $html = $this->htmlParser->getUrl($url->url);
+        } catch(\Exception $e){
+            $url->is_valid = false;
+            $url->save();
+            return 1;
+        }
         app()->make(HtmlProvider::class)->addToQueue(
             $url->id,
-            $this->htmlParser->getUrl($url->url)
+            $html
         );
         $url->last_refreshed = new Carbon();
         $url->save();
+        return 1;
     }
 }
